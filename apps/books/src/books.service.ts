@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
-import { Book } from './dto/book.dto';
+import { BookDto } from './dto/book.dto';
 
 @Injectable()
 export class BooksService {
-  private books: Book[] = [
+  private books: BookDto[] = [
     {
       id: 1,
       title: 'Book 1',
@@ -20,8 +20,8 @@ export class BooksService {
     }
   ];
 
-  create(createBookDto: CreateBookDto): Book {
-    const newBook: Book = {
+  create(createBookDto: CreateBookDto): BookDto {
+    const newBook: BookDto = {
       ...createBookDto,
       id: this.books.length + 1
     }
@@ -30,21 +30,21 @@ export class BooksService {
     return newBook;
   }
 
-  findAll(): Book[] {
+  findAll(): BookDto[] {
     return this.books;
   }
 
-  findOne(id: number): Book | undefined {
+  findOne(id: number): BookDto | undefined {
     return this.books.find(book => book.id === id);
   }
 
-  update(id: number, updateBookDto: UpdateBookDto): Book {
+  update(id: number, updateBookDto: UpdateBookDto): BookDto {
     const bookToUpdate = this.books.find(book => book.id === id);
     if (!bookToUpdate) {
       throw new NotFoundException(`Book #${id} not found`);
     }
 
-    const updatedBook: Book = {
+    const updatedBook: BookDto = {
       ...bookToUpdate,
       ...updateBookDto
     }

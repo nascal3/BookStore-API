@@ -3,24 +3,24 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
-import { Book } from './dto/book.dto';
+import { BookDto } from './dto/book.dto';
 
 @Controller()
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
   @MessagePattern('books.create')
-  create(@Payload() createBookDto: CreateBookDto): Book {
+  create(@Payload() createBookDto: CreateBookDto): BookDto {
     return this.booksService.create(createBookDto);
   }
 
-  @MessagePattern('books.findAllk')
-  findAll(): Book[] {
+  @MessagePattern('books.findAll')
+  findAll(): BookDto[] {
     return this.booksService.findAll();
   }
 
   @MessagePattern('books.findOne')
-  findOne(@Payload() id: number): Book {
+  findOne(@Payload() id: number): BookDto {
     const bookResult = this.booksService.findOne(id);
     if (!bookResult) {
       throw new NotFoundException(`Book #${id} not found`);
@@ -29,7 +29,7 @@ export class BooksController {
   }
 
   @MessagePattern('books.update')
-  update(@Payload() updateBookDto: UpdateBookDto): Book {
+  update(@Payload() updateBookDto: UpdateBookDto): BookDto {
     return this.booksService.update(updateBookDto.id, updateBookDto);
   }
 
