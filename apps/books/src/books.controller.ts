@@ -1,23 +1,23 @@
 import { Controller, NotFoundException } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { BooksService } from './books.service';
-import { BOOKS_PATTERN, BookDto, UpdateBookDto, CreateBookDto } from '@app/contracts';
+import { BOOKS_PATTERNS, BookDto, UpdateBookDto, CreateBookDto } from '@app/contracts';
 
 @Controller()
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
-  @MessagePattern(BOOKS_PATTERN.CREATE)
+  @MessagePattern(BOOKS_PATTERNS.CREATE)
   create(@Payload() createBookDto: CreateBookDto): BookDto {
     return this.booksService.create(createBookDto);
   }
 
-  @MessagePattern(BOOKS_PATTERN.FIND_ALL)
+  @MessagePattern(BOOKS_PATTERNS.FIND_ALL)
   findAll(): BookDto[] {
     return this.booksService.findAll();
   }
 
-  @MessagePattern(BOOKS_PATTERN.FIND_ONE)
+  @MessagePattern(BOOKS_PATTERNS.FIND_ONE)
   findOne(@Payload() id: number): BookDto {
     const bookResult = this.booksService.findOne(id);
     if (!bookResult) {
@@ -26,12 +26,12 @@ export class BooksController {
     return bookResult;
   }
 
-  @MessagePattern(BOOKS_PATTERN.UPDATE)
+  @MessagePattern(BOOKS_PATTERNS.UPDATE)
   update(@Payload() updateBookDto: UpdateBookDto): BookDto {
     return this.booksService.update(updateBookDto.id, updateBookDto);
   }
 
-  @MessagePattern(BOOKS_PATTERN.REMOVE)
+  @MessagePattern(BOOKS_PATTERNS.REMOVE)
   remove(@Payload() id: number): string {
     return this.booksService.remove(id);
   }

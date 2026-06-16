@@ -1,0 +1,1 @@
+export const BOOK_CLIENT = Symbol('BOOK_CLIENT');
