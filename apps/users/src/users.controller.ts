@@ -1,13 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { MessagePattern } from '@nestjs/microservices';
-import { UserDto } from './dto/user.dto';
+import { USERS_PATTERN, UserDto } from '@app/contracts';
 
 @Controller()
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @MessagePattern('users.findAll')
+  @MessagePattern(USERS_PATTERN.FIND_ALL)
   findAll(): UserDto[] {
     return this.usersService.findAll();
   }

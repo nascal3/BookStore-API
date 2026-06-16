@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { UserDto } from '../../../users/src/dto/user.dto';
+import { UserDto } from '@app/contracts/users/user.dto';
 import { ClientProxy } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 
